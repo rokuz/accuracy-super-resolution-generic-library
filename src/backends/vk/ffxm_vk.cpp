@@ -705,7 +705,7 @@ VkAccessFlags getVKAccessFlagsFromResourceState(FfxmResourceStates state)
     case(FFXM_RESOURCE_STATE_PIXEL_COMPUTE_READ):
         return VK_ACCESS_SHADER_READ_BIT;
     case(FFXM_RESOURCE_STATE_PIXEL_WRITE):
-        return VK_ACCESS_SHADER_WRITE_BIT;
+        return VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
     case FFXM_RESOURCE_STATE_COPY_SRC:
         return VK_ACCESS_TRANSFER_READ_BIT;
     case FFXM_RESOURCE_STATE_COPY_DEST:
@@ -727,14 +727,14 @@ VkPipelineStageFlags getVKPipelineStageFlagsFromResourceState(FfxmResourceStates
     case(FFXM_RESOURCE_STATE_COMPUTE_READ):
     case(FFXM_RESOURCE_STATE_PIXEL_READ):
     case(FFXM_RESOURCE_STATE_PIXEL_COMPUTE_READ):
-        return VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
+        return VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
     case(FFXM_RESOURCE_STATE_INDIRECT_ARGUMENT):
         return VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT;
     case FFXM_RESOURCE_STATE_COPY_SRC:
     case FFXM_RESOURCE_STATE_COPY_DEST:
         return VK_PIPELINE_STAGE_TRANSFER_BIT;
     case FFXM_RESOURCE_STATE_PIXEL_WRITE:
-        return VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
+        return VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
     default:
         FFXM_ASSERT_MESSAGE(false, "Pipeline stage flag not yet supported");
         return VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
@@ -803,7 +803,11 @@ void addBarrier(BackendContext_VK* backendContext, FfxmResourceInternal* resourc
 
     BackendContext_VK::Resource& ffxmResource = backendContext->pResources[resource->internalIndex];
 
-    if(ffxmResource.currentState == newState && !ffxmResource.undefined)
+    const bool staysInWritingState = (newState & (FFXM_RESOURCE_STATE_UNORDERED_ACCESS |
+                                                  FFXM_RESOURCE_STATE_PIXEL_WRITE |
+                                                  FFXM_RESOURCE_STATE_COPY_DEST)) != 0;
+
+    if(ffxmResource.currentState == newState && !ffxmResource.undefined && !staysInWritingState)
     {
         return;
     }

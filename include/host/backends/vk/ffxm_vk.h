@@ -27,7 +27,9 @@
 #pragma once
 
 #ifdef FFXM_VKLOADER_VOLK
-#if defined(__linux__)
+#if defined(__ANDROID__)
+#	define VK_USE_PLATFORM_ANDROID_KHR 1
+#elif defined(__linux__)
 #	define VK_USE_PLATFORM_XCB_KHR 1
 #	define VK_USE_PLATFORM_XLIB_KHR 1
 #elif defined(_WIN32)

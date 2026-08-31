@@ -84,8 +84,9 @@ struct AccumulateOutputsFS
 #if FFXM_FSR2_OPTION_SHADER_OPT_ULTRA_PERFORMANCE
     FfxFloat32x3 fUpscaledColor    : SV_TARGET0;
     FfxFloat32x2 fLockStatus        : SV_TARGET1;
+    FfxFloat32x4 fLumaHistory       : SV_TARGET2;
 #if FFXM_FSR2_OPTION_APPLY_SHARPENING == 0
-    FfxFloat32x3 fColor             : SV_TARGET2;
+    FfxFloat32x3 fColor             : SV_TARGET3;
 #endif
 #elif !FFXM_SHADER_QUALITY_BALANCED_OR_PERFORMANCE
     FfxFloat32x4 fColorAndWeight    : SV_TARGET0;
@@ -111,6 +112,7 @@ AccumulateOutputsFS main(float4 SvPosition : SV_POSITION)
     AccumulateOutputsFS output = (AccumulateOutputsFS)0;
 #if FFXM_FSR2_OPTION_SHADER_OPT_ULTRA_PERFORMANCE
     output.fUpscaledColor = result.fColorAndWeight.xyz;
+    output.fLumaHistory = FfxFloat32x4(0.0, 0.0, 0.0, 0.0);
 #elif !FFXM_SHADER_QUALITY_BALANCED_OR_PERFORMANCE
     output.fColorAndWeight = result.fColorAndWeight;
     output.fLumaHistory = result.fLumaHistory;

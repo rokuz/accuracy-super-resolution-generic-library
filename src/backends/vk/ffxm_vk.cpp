@@ -284,7 +284,7 @@ FFXM_API size_t ffxmGetScratchMemorySizeVK(VkPhysicalDevice physicalDevice, size
     FfxmUInt32 resourceArraySize = FFXM_ALIGN_UP(maxContexts * FFXM_MAX_RESOURCE_COUNT * sizeof(BackendContext_VK::Resource), sizeof(FfxmUInt32));
     FfxmUInt32 contextArraySize = FFXM_ALIGN_UP(maxContexts * sizeof(BackendContext_VK::EffectContext), sizeof(FfxmUInt32));
 
-    return FFXM_ALIGN_UP(sizeof(BackendContext_VK) + extensionPropArraySize + gpuJobDescArraySize + resourceArraySize + ringBufferArraySize +
+    return FFXM_ALIGN_UP(sizeof(BackendContext_VK) + extensionPropArraySize + gpuJobDescArraySize + resourceViewArraySize + ringBufferArraySize +
         pipelineArraySize + resourceArraySize + contextArraySize, sizeof(uint64_t));
 }
 

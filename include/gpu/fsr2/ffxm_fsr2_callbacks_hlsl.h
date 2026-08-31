@@ -79,6 +79,7 @@
         FfxFloat32    fDeltaTime;
         FfxFloat32    fDynamicResChangeFactor;
         FfxFloat32    fViewSpaceToMetersFactor;
+        FfxFloat32    fExposureValue;
     };
 
 #define FFXM_FSR2_CONSTANT_BUFFER_1_SIZE (sizeof(cbFSR2) / 4)  // Number of 32-bit values. This must be kept in sync with the cbFSR2 size.
@@ -921,7 +922,7 @@ void GatherDilatedDepthRQuad(FfxFloat32x2 fUV,
 #if defined(FSR2_BIND_SRV_INPUT_EXPOSURE)
 FfxFloat32 Exposure()
 {
-    FfxFloat32 exposure = r_input_exposure[FfxUInt32x2(0, 0)].x;
+    FfxFloat32 exposure = fExposureValue;
 
     if (exposure == 0.0f) {
         exposure = 1.0f;

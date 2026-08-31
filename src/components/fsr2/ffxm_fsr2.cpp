@@ -1100,6 +1100,7 @@ static FfxmErrorCode fsr2Dispatch(FfxmFsr2Context_Private* context, const FfxmFs
     const float cameraAngleHorizontal = atan(tan(params->cameraFovAngleVertical / 2) * aspectRatio) * 2;
     context->constants.tanHalfFOV = tanf(cameraAngleHorizontal * 0.5f);
     context->constants.viewSpaceToMetersFactor = (params->viewSpaceToMetersFactor > 0.0f) ? params->viewSpaceToMetersFactor : 1.0f;
+    context->constants.exposureValue = params->exposureValue;
 
     // compute params to enable device depth to view space depth computation in shader
     setupDeviceDepthToViewSpaceDepthParams(context, params);

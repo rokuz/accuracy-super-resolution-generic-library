@@ -199,6 +199,7 @@ typedef struct FfxmFsr2DispatchDescription {
     FfxmResource                 depth;                              ///< A <c><i>FfxmResource</i></c> containing 32bit depth values for the current frame (at render resolution).
     FfxmResource                 motionVectors;                      ///< A <c><i>FfxmResource</i></c> containing 2-dimensional motion vectors (at render resolution if <c><i>FFXM_FSR2_ENABLE_DISPLAY_RESOLUTION_MOTION_VECTORS</i></c> is not set).
     FfxmResource                 exposure;                           ///< A optional <c><i>FfxmResource</i></c> containing a 1x1 exposure value.
+    float                        exposureValue;                      ///< Scene exposure as a scalar; 0 selects a neutral 1.0.
     FfxmResource                 reactive;                           ///< A optional <c><i>FfxmResource</i></c> containing alpha value of reactive objects in the scene.
     FfxmResource                 transparencyAndComposition;         ///< A optional <c><i>FfxmResource</i></c> containing alpha value of special objects in the scene.
     FfxmResource                 output;                             ///< A <c><i>FfxmResource</i></c> containing the output color buffer for the current frame (at presentation resolution).

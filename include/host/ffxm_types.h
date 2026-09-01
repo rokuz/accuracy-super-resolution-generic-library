@@ -85,7 +85,7 @@ namespace arm
 /// Maximum number of queued frames in the backend
 ///
 /// @ingroup Defines
-#define FFXM_MAX_QUEUED_FRAMES          (4)
+#define FFXM_MAX_QUEUED_FRAMES          (8)
 
 /// Maximum number of resources per effect context
 ///
